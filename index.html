@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORION STONE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber: #EF9F27;
+    --amber-dim: #BA7517;
+    --amber-dark: #412402;
+    --amber-glow: #FAC775;
+    --chrome: #B4B2A9;
+    --chrome-light: #D3D1C7;
+    --chrome-dark: #444441;
+    --bg: #0a0806;
+    --bg-surface: #110e09;
+    --bg-card: #161008;
+    --scan-line: rgba(239, 159, 39, 0.03);
+    --text-main: #FAC775;
+    --text-dim: #854F0B;
+    --text-muted: #633806;
+    --border: rgba(239, 159, 39, 0.2);
+    --border-bright: rgba(239, 159, 39, 0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-main);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      var(--scan-line) 0px,
+      var(--scan-line) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(239,159,39,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 998;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10, 8, 6, 0.92);
+    backdrop-filter: blur(4px);
+  }
+
+  .nav-logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 0.3em;
+    color: var(--amber);
+    text-decoration: none;
+  }
+
+  .nav-logo span {
+    color: var(--chrome);
+    font-weight: 400;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--amber); }
+
+  .status-bar {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+  }
+
+  .status-bar .blink {
+    animation: blink 1.2s step-end infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  header {
+    padding: 6rem 2rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .header-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .header-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--text-muted);
+  }
+
+  h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.05em;
+    color: var(--amber);
+    text-shadow: 0 0 40px rgba(239,159,39,0.3);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 .dim { color: var(--text-muted); }
+
+  .subtitle {
+    font-family: 'VT323', monospace;
+    font-size: 1.4rem;
+    color: var(--chrome);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    opacity: 0.7;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+  .hero-meta .dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .tape-divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--border-bright), var(--amber), var(--border-bright), transparent);
+    margin: 0;
+    position: relative;
+  }
+
+  .tape-divider::before, .tape-divider::after {
+    content: '◆';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--amber);
+    font-size: 0.5rem;
+  }
+  .tape-divider::before { left: 2rem; }
+  .tape-divider::after { right: 2rem; }
+
+  section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .section-num {
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    color: var(--amber-dim);
+    opacity: 0.5;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .essay-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber-dim);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .essay-block::before {
+    content: attr(data-title);
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .essay-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--amber-glow);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .essay-date {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .essay-body {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--chrome-light);
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .essay-body p { margin-bottom: 1.5rem; }
+  .essay-body p:last-child { margin-bottom: 0; }
+
+  .essay-body em {
+    color: var(--amber);
+    font-style: normal;
+  }
+
+  .placeholder-notice {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .placeholder-notice::before {
+    content: '//';
+    color: var(--amber-dim);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .gallery-item {
+    background: var(--bg-card);
+    aspect-ratio: 4/3;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.3) contrast(1.1);
+    transition: filter 0.3s, transform 0.4s;
+    display: block;
+  }
+
+  .gallery-item:hover img {
+    filter: sepia(0) contrast(1.2) brightness(1.1);
+    transform: scale(1.04);
+  }
+
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px dashed var(--border);
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(239,159,39,0.02) 10px,
+      rgba(239,159,39,0.02) 20px
+    );
+  }
+
+  .gallery-placeholder .plus {
+    font-family: 'VT323', monospace;
+    font-size: 2rem;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+
+  .gallery-placeholder .label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .gallery-item .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,8,6,0.85) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+  }
+
+  .gallery-item:hover .overlay { opacity: 1; }
+
+  .overlay-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--amber-glow);
+    text-transform: uppercase;
+  }
+
+  .tape-counter {
+    font-family: 'VT323', monospace;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 1rem;
+  }
+
+  .footer-sig {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--text-muted);
+  }
+
+  .footer-sig strong { color: var(--amber-dim); }
+
+  .footer-status {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-align: right;
+  }
+
+  .reel {
+    display: inline-block;
+    animation: spin 4s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem; }
+    header { padding: 3rem 1rem 2rem; }
+    section { padding: 2rem 1rem; }
+    .essay-block { padding: 1.5rem; }
+    .nav-links { display: none; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<nav>
+  <a href="#" class="nav-logo">ORION<span> // </span>STONE</a>
+  <ul class="nav-links">
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+  </ul>
+  <div class="status-bar">SYS_ONLINE <span class="blink">█</span></div>
+</nav>
+
+<header>
+  <div class="header-tag">Transmission — v0.1</div>
+  <h1>ORION<br><span class="dim">STONE</span></h1>
+  <div class="subtitle">// Hermetic Architect. Polymath. Builder.</div>
+  <div class="hero-meta">
+    <span><span class="dot"></span> Chicago, IL</span>
+    <span>// IT & Development</span>
+    <span>// STONEMIND Framework</span>
+    <span>// Est. 2024</span>
+  </div>
+</header>
+
+<div class="tape-divider"></div>
+
+<section id="writing">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-label">Writing</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="essay-block" data-title="Essay // 01">
+    <div class="essay-title">Your Essay Title Goes Here</div>
+    <div class="essay-date">// REPLACE WITH DATE &nbsp;&nbsp; ◆ &nbsp;&nbsp; REPLACE WITH CATEGORY</div>
+    <div class="essay-body">
+      <p>This is where your essay goes. Replace this placeholder text with your actual writing. The layout will hold whatever length you need — short meditation or long-form argument, it adapts.</p>
+      <p>The cassette futurism aesthetic here is deliberate: <em>warm amber tones</em>, scan lines, monospace typography. It signals that this isn't generic — it has a point of view before you've read a word.</p>
+      <p>To add your essay, open this file in any text editor and replace the content between the <code>&lt;div class="essay-body"&gt;</code> tags. Each paragraph goes inside <code>&lt;p&gt;&lt;/p&gt;</code> tags. Wrap words in <code>&lt;em&gt;&lt;/em&gt;</code> to highlight them in amber.</p>
+    </div>
+    <div class="placeholder-notice">Replace placeholder content with your actual essay before publishing</div>
+  </div>
+</section>
+
+<div class="tape-divider"></div>
+
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-label">Gallery</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="gallery-grid">
+    <!-- Replace placeholder items with real images like this:
+         <div class="gallery-item">
+           <img src="your-image.jpg" alt="description">
+           <div class="overlay"><span class="overlay-text">Image Title</span></div>
+         </div>
+    -->
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="plus">+</span>
+        <span class="label">Add Image</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="plus">+</span>
+        <span class="label">Add Image</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="plus">+</span>
+        <span class="label">Add Image</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="plus">+</span>
+        <span class="label">Add Image</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="plus">+</span>
+        <span class="label">Add Image</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="plus">+</span>
+        <span class="label">Add Image</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tape-counter">// 06 SLOTS — REPLACE WITH YOUR IMAGES</div>
+</section>
+
+<footer>
+  <div class="footer-sig"><strong>ORION STONE</strong> // All rights reserved</div>
+  <div class="footer-status"><span class="reel">◎</span> RECORDING &nbsp; // &nbsp; TRANSMISSION ACTIVE</div>
+</footer>
+
+</body>
+</html>
