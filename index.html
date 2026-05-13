@@ -188,8 +188,10 @@
   }
 
   .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
   .hero-meta .dot {
-    width: 4px; height: 4px;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
     background: var(--amber);
     animation: pulse 2s ease-in-out infinite;
@@ -208,7 +210,8 @@
     position: relative;
   }
 
-  .tape-divider::before, .tape-divider::after {
+  .tape-divider::before,
+  .tape-divider::after {
     content: '◆';
     position: absolute;
     top: 50%;
@@ -216,6 +219,7 @@
     color: var(--amber);
     font-size: 0.5rem;
   }
+
   .tape-divider::before { left: 2rem; }
   .tape-divider::after { right: 2rem; }
 
@@ -303,26 +307,62 @@
   .essay-body p { margin-bottom: 1.5rem; }
   .essay-body p:last-child { margin-bottom: 0; }
 
+  .essay-body h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin: 2.5rem 0 1rem;
+  }
+
   .essay-body em {
     color: var(--amber);
     font-style: normal;
   }
 
-  .placeholder-notice {
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    letter-spacing: 0.15em;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  .essay-body a {
+    color: var(--amber-glow);
+    text-decoration-color: var(--amber-dim);
   }
 
-  .placeholder-notice::before {
-    content: '//';
-    color: var(--amber-dim);
+  .essay-collapsible {
+    transition: max-height 0.35s ease;
+  }
+
+  .essay-collapsible.collapsed {
+    max-height: 13.5rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .essay-collapsible.collapsed::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4rem;
+    background: linear-gradient(180deg, rgba(22,16,8,0), rgba(10,8,6,0.95));
+    pointer-events: none;
+  }
+
+  .read-toggle {
+    margin-top: 1rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--amber);
+    padding: 0.45rem 0.8rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .read-toggle:focus {
+    outline: 2px solid var(--amber-glow);
+    outline-offset: 2px;
   }
 
   .gallery-grid {
@@ -425,7 +465,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: gap;
     max-width: 900px;
     margin: 0 auto;
     gap: 1rem;
@@ -477,12 +516,12 @@
 </nav>
 
 <header>
-  <div class="header-tag">Transmission — v0.1</div>
+  <div class="header-tag">Transmission - v0.1</div>
   <h1>ORION<br><span class="dim">STONE</span></h1>
   <div class="subtitle">// Hermetic Architect. Polymath. Builder.</div>
   <div class="hero-meta">
-    <span><span class="dot"></span> Chicago, IL</span>
-    <span>// IT & Development</span>
+    <span><span class="dot"></span> Earth</span>
+    <span>// Systems Engineer</span>
     <span>// STONEMIND Framework</span>
     <span>// Est. 2024</span>
   </div>
@@ -498,14 +537,35 @@
   </div>
 
   <div class="essay-block" data-title="Essay // 01">
-    <div class="essay-title">Your Essay Title Goes Here</div>
-    <div class="essay-date">// REPLACE WITH DATE &nbsp;&nbsp; ◆ &nbsp;&nbsp; REPLACE WITH CATEGORY</div>
-    <div class="essay-body">
-      <p>This is where your essay goes. Replace this placeholder text with your actual writing. The layout will hold whatever length you need — short meditation or long-form argument, it adapts.</p>
-      <p>The cassette futurism aesthetic here is deliberate: <em>warm amber tones</em>, scan lines, monospace typography. It signals that this isn't generic — it has a point of view before you've read a word.</p>
-      <p>To add your essay, open this file in any text editor and replace the content between the <code>&lt;div class="essay-body"&gt;</code> tags. Each paragraph goes inside <code>&lt;p&gt;&lt;/p&gt;</code> tags. Wrap words in <code>&lt;em&gt;&lt;/em&gt;</code> to highlight them in amber.</p>
+    <div class="essay-title">How Minecraft Restored My Enthusiasm for Life</div>
+    <div class="essay-date">// 10/5/2026 &nbsp;&nbsp; ◆ &nbsp;&nbsp; Life</div>
+    <div class="essay-body essay-collapsible collapsed" id="essay-01-body">
+      <p>What is the meaning of life? This is a philosophical question that has plagued reasoning minds since the dawn of man (and woman). People will spend either their entire lives or all of 15 minutes pondering the question, and reasonably so either way. Usually presenting this question in public will result you with a range of answers from the religious to the dismissive. But why is it so craved by people to ascribe meaning to life? I mean think of a simple spider. It's born into its arachnid life pre-loaded with purpose. Eat, grow, eat, spin a web, eat, grow, procreate, die. From a human perspective, a spider's life may seem simplistic, absurd even. But to the spider, due to its ignorance of the absurdity of its processes, <em>it's all</em> it will ever know.</p>
+
+      <p>Alternatively, humans have been using their advanced reasoning capabilities for hundreds of millennia. It granted humans the ability to rise to the top of the food chain, at which point the only other predator became other humans. Fast forward to the present and this advanced reasoning ability has left us with politics, religion, philosophy, science, and much of the like. With all of this free time humans now have, not being eaten and all, it allows humans to spend more time thinking rather than doing. A popular culture today known as hustle culture (aka being in your bag, stacking bands, etc.) would suggest doing such would be a waste, as taking time to think doesn't demonstrably move your life particularly monetarily, and in this economy can you blame them? However, science has often surfaced research suggesting that having down time is a necessary part of life. This is where meditation comes in clutch.</p>
+
+      <p>I view Minecraft as a form of meditation. As many Minecraft players can relate, playing the game can feel like a form of mental release: easy mechanics, no objectives, controllable or non-existent opposition. It begins to feel that the only thing holding you back is your own creativity. Think of it this way: you're <em>mining down</em> all the problems and stressors of life and using the leftover material to craft something tangible. This I believe is the heart of meditation. Now others may have their own forms but this one works for me.</p>
+
+      <p>As a preface, I have for various reasons felt The Big Sad for enough time for it to have a major impact on my quality of life especially in the past weeks. I've often felt disdain for these times as many with The Big Sad do. I mean it sucks to not be able to do or interested in quite literally any and everything. You begin to feel less like a reasoning being and more like the itsy bitsy spider (Sisyphus for kids) attempting to climb the water spout but with a meaning-seeking brain. It's not that you feel sad or frustrated that you have to climb back up, although those feelings creep in later, it feels more <em>flat</em>. You no longer care whether you climb up or not. You start to question what you're even climbing toward, while at the same time dismissing the climb altogether, feeling that even once you get to the top, you'll still feel just as lost as you were at the bottom. The feeling for me became an endless cycle of: wake up, sit at desk, stare at screen, become disinterested, lay in bed, feel bad. That is until I decided to open Minecraft.</p>
+
+      <p>Most games had seemed to become tasks to complete or a predictable rotation. I'd normally start on Overwatch with the idea that it wasn't a game that I'd want to play for a while, knowing that I'd likely get frustrated after a few rounds and decide to swap games. Next was Cyberpunk 2077 which I had completed before but not as thoroughly as this playthrough. Cyberpunk became my main focus for quite a bit, completing more side quests than before and seeing the effects of my side content on the main story, so all in all Cyberpunk was quite fun, that is until I finished it again. At that point the game again became disinteresting, so naturally I figured I'd try some mods out which reinvigorated me for all of three days. The final game in the cycle was No Man's Sky. Now losing interest in No Man's Sky was when I started to figure that something else was emotionally afoot. See No Man's Sky was a game that I had been severely interested in since the VGX 2013 showcase. I didn't even have a PlayStation at the time but I knew that this was a game that I needed in my life. To me it seemed like Minecraft in space and once I got my death grip on it, I knew that it was one game that I'd never let go, and now here I was, completely apathetic towards a game I'd spent hundreds of hours playing.</p>
+
+      <p>Minecraft is one of those games that is so different to me, there may never be anything to match it. Even in No Man's Sky there was always something going on, ships flying overhead, environmental protections falling, life support, etc. But in Minecraft there's just a totally different atmosphere, no pun intended. Normally my generation has the tendency to be listening or doing multiple things at once, which in itself is not some bad omen. But playing Minecraft and focusing on the game alone allows me to fully lock in. The sound of your feet on different materials, the ominous sounds of nearby caves, the occasional bat flying into lava, but most importantly, the silence. It was during these moments that I really felt a part of the world I would soon build. And that is, I believe, how Minecraft masterfully strokes the creative nerve.</p>
+
+      <p>Being in this world where you have the absolute creative freedom to roam, build, destroy, it gives a profound sense of control that is impossible to come by in our universe. This sense of control makes me feel safe. I know that if I want something to exist in my world, I can build it. I know that if something happens in my world I don't like I have the power to change it. It's in these postulates where I rediscover my youthful vigor.</p>
+
+      <p>As a kid, I used to be forced into cult meetings, conventions, assemblies, and the like. And as a kid normally is in those conditions, I was often bored out of my mind. Minecraft became my saviour from whatever the hell kind of lies the douchebag was spouting from the stage. While he babbled about some violent deity's rules made up thousands of years ago about how it was fine to enslave people, I instead escaped into pondering about how to kidnap villagers and force them into my secret base hidden in a hillside to forever reproduce and engage in manual labor for profit. I imagined what I would build next, how to improve the house I made, thinking of what new shapes or features to add next, planning on how to gain the materials, what enchantment I wanted on my diamond "Slayer of Worlds" sword. Somehow, then, through the power of the human brain and relativity, by the time I had finished all my plans, the two hour meeting was finally over and I could finally talk to my friends, giving my big mega brain a rest from all the hopium I'd just generated. Needless to say this is the same feeling I feel revived in myself today when I play Minecraft.</p>
+
+      <p>Decades of institutional manipulation, covert programs, manufactured consent, the slow erosion of trust in anything larger than yourself, have made this kind of genuine internal optimism feel almost naive. At least in The Un-united American Empire (UAE), this sort of childish hopium is hard to come by. But when we find things that can bring just a little bit of that optimism back into our lives it can genuinely make us feel better, not only about ourselves but also the possibly simulated world around us. It reminds us that we do have the power to change things in our lives, even if it's just one block of dirt, one seed planted, one monster slain. It gives us what O-bam-na always talked about, hope. And not just blind hope in some theorized future reality, but hope that comes from <em>within</em> ourselves. Some call it self-love, or ego, or unchecked optimism. But when we are reminded not just in word, but in tangible result that we do have the opportunity to make things better for at least ourselves, and by extension, others, the feeling inevitably spreads to other aspects of our lives. Therefore when those feelings spread we start to see our lives as a game of Minecraft, where we simply gather resources and build a life and world that we truly desire. So then what <em>is</em> the meaning of all of this?</p>
+
+      <p>42 has been jokingly referenced as "The answer to the universe and everything." If like me you've ever dived just a little bit into the joke, you realize that it was not meant as some puzzle to solve, and more of an ironic jab at the search for meaning itself. Further investigation can easily lead you to the philosophy of Absurdism, the idea that our very search for purpose and meaning in an irrational and indifferent universe is, well, absurd. This absurdism is the essence of Minecraft. Minecraft works <em>because</em> it's absurdist practice. You build knowing the world isn't real, knowing it solves nothing, and you do it anyway, and <em>that's</em> the point. Absurdism differs from Nihilism (claims nothing matters including moral choices) in the way that despite the cold unfeeling universe, we exist, and as long as we do we have the ability to revolt in a sense against a senseless universe and still craft a life worth living. Unlike the spider, we can't unknow the absurdity. But we can, like Camus's Sisyphus, choose to push the boulder and mean it. The only caveat is that we all must recognize our own non-proverbial power. Taking stock of what's in our inventory and seeing what we can build to make our lives and the lives of others even just a little bit better.</p>
+
+      <h3>Works Cited</h3>
+      <p><em>Art as meditation: A lesson in mindfulness.</em> Rubin Museum of Himalayan Art. (n.d.). <a href="https://rubinmuseum.org/art-as-meditation-a-lesson-in-mindfulness/" target="_blank" rel="noreferrer">https://rubinmuseum.org/art-as-meditation-a-lesson-in-mindfulness/</a></p>
+      <p>Wikimedia Foundation. (2026, April 23). <em>Absurdism.</em> Wikipedia. <a href="https://en.wikipedia.org/wiki/Absurdism" target="_blank" rel="noreferrer">https://en.wikipedia.org/wiki/Absurdism</a></p>
+      <p>Young Minds. (n.d.). <em>The double-edged sword of "hustle culture": Blog.</em> <a href="https://www.youngminds.org.uk/young-person/blog/the-double-edged-sword-of-hustle-culture/" target="_blank" rel="noreferrer">https://www.youngminds.org.uk/young-person/blog/the-double-edged-sword-of-hustle-culture/</a></p>
     </div>
-    <div class="placeholder-notice">Replace placeholder content with your actual essay before publishing</div>
+    <button class="read-toggle" type="button" aria-expanded="false" aria-controls="essay-01-body">Read On</button>
   </div>
 </section>
 
@@ -519,12 +579,6 @@
   </div>
 
   <div class="gallery-grid">
-    <!-- Replace placeholder items with real images like this:
-         <div class="gallery-item">
-           <img src="your-image.jpg" alt="description">
-           <div class="overlay"><span class="overlay-text">Image Title</span></div>
-         </div>
-    -->
     <div class="gallery-item">
       <div class="gallery-placeholder">
         <span class="plus">+</span>
@@ -563,13 +617,25 @@
     </div>
   </div>
 
-  <div class="tape-counter">// 06 SLOTS — REPLACE WITH YOUR IMAGES</div>
+  <div class="tape-counter">// 06 SLOTS - REPLACE WITH YOUR IMAGES</div>
 </section>
 
 <footer>
   <div class="footer-sig"><strong>ORION STONE</strong> // All rights reserved</div>
   <div class="footer-status"><span class="reel">◎</span> RECORDING &nbsp; // &nbsp; TRANSMISSION ACTIVE</div>
 </footer>
+
+<script>
+  document.querySelectorAll('.read-toggle').forEach((button) => {
+    button.addEventListener('click', () => {
+      const target = document.getElementById(button.getAttribute('aria-controls'));
+      const collapsed = target.classList.toggle('collapsed');
+
+      button.setAttribute('aria-expanded', String(!collapsed));
+      button.textContent = collapsed ? 'Read On' : 'Show Less';
+    });
+  });
+</script>
 
 </body>
 </html>
